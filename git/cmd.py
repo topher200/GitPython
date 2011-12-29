@@ -51,8 +51,16 @@ class Git(LazyMixin):
 	# Enables debugging of GitPython's git commands
 	GIT_PYTHON_TRACE = os.environ.get("GIT_PYTHON_TRACE", False)
 	
+        if os.name == 'posix':
+          # linux
+          git_exec_name = "git"
+        else:
+          # windows
+          git_exec_name = "git.cmd"
+	
 	# Provide the full path to the git executable. Otherwise it assumes git is in the path
-	GIT_PYTHON_GIT_EXECUTABLE = os.environ.get("GIT_PYTHON_GIT_EXECUTABLE", 'git')
+	GIT_PYTHON_GIT_EXECUTABLE = os.environ.get("GIT_PYTHON_GIT_EXECUTABLE",
+                                                   git_exec_name)
 	
 	
 	class AutoInterrupt(object):
